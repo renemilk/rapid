@@ -42,6 +42,7 @@ Other commands are for power users mostly, e.g.:
 
 def main():
 	""" Commandline interface entry point."""
+	print 'version: ',rapid_version
 	logging.basicConfig(level = logging.INFO, stream = sys.stdout, format = '%(message)s')
 	parser = OptionParser(usage=USAGE)
 
