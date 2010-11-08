@@ -10,6 +10,12 @@ import logging
 
 log = logging.getLogger('root')
 
+#try to get a version string from file written by distutils
+try:
+	import version
+	rapid_version = version.dist_version
+except:
+	rapid_version = 'undefined'
 
 def init(data_dir, _ui):
 	"""  Create rapid module."""
