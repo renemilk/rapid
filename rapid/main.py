@@ -8,6 +8,23 @@ import gzip, os
 import logging
 
 
+def rev_compare(tagA,tagB):
+	tokensA = tagA.split(':')
+	tokensB = tagB.split(':')
+	#print tagA,tokensA
+	if len(tokensA) != len(tokensB):
+		return cmp(tagA.lower(), tagB.lower())
+	for i in range(len(tokensA)):
+		if tokensA[i] == tokensB[i]:
+			continue
+		try:
+			intA = int( tokensA[i] )
+			intB = int( tokensB[i] )
+			return cmp(intA, intB)
+		except:
+			pass
+	return cmp(tagA.lower(), tagB.lower())
+
 log = logging.getLogger('root')
 
 
@@ -136,6 +153,13 @@ def list_tags(searchterm, available):
 			if tag not in rapid.pinned_tags:
 				p = rapid.packages[tag]
 				ui.output_detail('  %-40s (%s)' % (tag, p.name))
+
+def list_newest_tags(searchterm, count):
+	""" List all tags which match searchterm."""
+	ui.output_header('Newest tags for %s:'%searchterm)
+	for tag in sorted(ui._select_core(searchterm, rapid.tags),rev_compare)[-count:]:
+		p = rapid.packages[tag]
+		ui.output_detail('  %-40s (%s)' % (tag, p.name))
 
 
 def upgrade():

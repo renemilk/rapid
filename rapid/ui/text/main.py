@@ -159,6 +159,8 @@ def main():
 		upgrade()
 	elif verb == 'clean-update' or verb == 'clean-upgrade':
 		clean_upgrade()
+	elif verb == 'list-newest-tags':
+		list_newest_tags( opt_arg(), 2 )
 	elif verb == 'uninstall-unpinned':
 		uninstall_unpinned()
 	elif verb == 'collect-pool':
