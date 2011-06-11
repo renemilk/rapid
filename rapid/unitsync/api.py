@@ -62,8 +62,14 @@ def generate_locations():
 		raise NotImplemented()
 
 def locate_unitsync():
-	"""Locate and instantiate unitsync, otherwise raise UnitsyncError.
+	"""Try to load the new style wrapper, fallback to Locate and instantiate unitsync, otherwise raise UnitsyncError.
 	The unitsync library must export at least Init, UnInit and GetWritableDataDirectory."""
+	try:
+		unitsync = __import__('pyunitsync')
+		print "using new style unitsync wrapper"
+		return unitsync
+	except:
+		print "Couldn't import new style unitsync wrapper"
 	for location in generate_locations():
 		if os.path.isfile(location):
 			unitsync = Unitsync(location)
